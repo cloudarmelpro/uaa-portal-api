@@ -15,5 +15,6 @@ WORKDIR /app
 COPY --from=build /install /usr/local
 COPY src/ ./src/
 USER 10001
+LABEL org.opencontainers.image.title="uaa-portal-api" org.opencontainers.image.description="API du portail de l université Anjombakilala d Androy"
 EXPOSE 8080
 CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8080"]
