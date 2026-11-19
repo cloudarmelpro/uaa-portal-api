@@ -10,7 +10,7 @@ api = APIRouter(prefix="/api")
 
 @api.get("/")
 def accueil():
-    return {"service": "uaa-portal-api", "message": "Bonjour au jury de l'ENI, nous sommes heureux de vous présenter notre projet."}
+    return {"service": "uaa-portal-api", "message": "Bonjour au jury de l'ENI, "}
 
 
 @api.get("/health")
