@@ -91,14 +91,15 @@ jobs:
           repository: cloudarmelpro/uaa-platform-gitops
           token: ${{ secrets.GITOPS_TOKEN }}
 
-      - name: Mise à jour de l'étiquette en dev
+      - name: Mise à jour de l'étiquette en dev, staging et prod
         run: |
-          cd apps/portal-api/overlays/dev
-          kustomize edit set image portal-api=${{ vars.ECR_REPOSITORY_URL }}:${{ needs.image.outputs.tag }}
+          for env in dev staging prod; do
+            (cd apps/portal-api/overlays/$env && kustomize edit set image portal-api=${{ vars.ECR_REPOSITORY_URL }}:${{ needs.image.outputs.tag }})
+          done
 
       - name: Commit et push
         run: |
           git config user.name  "ci-bot"
           git config user.email "ci-bot@users.noreply.github.com"
-          git commit -am "deploy(dev): portal-api ${{ needs.image.outputs.tag }}"
+          git commit -am "deploy(dev, staging, prod): portal-api ${{ needs.image.outputs.tag }}"
           git push
